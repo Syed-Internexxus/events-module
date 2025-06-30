@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Create Career Fair Event</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1E40AF',
+            secondary: '#3B82F6',
+            accent: '#10B981',
+            warning: '#F59E0B',
+            soft: '#F8FAFC',
+            surface: '#FFFFFF'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          },
+          animation: {
+            'slide-up': 'slideUp 0.3s ease-out',
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'pulse-soft': 'pulseSoft 2s infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gradient-to-br from-soft via-blue-50 to-indigo-100 min-h-screen">
+  <!-- Navigation Header -->
+  <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-4">
+          <div class="flex-shrink-0">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i class="fas fa-graduation-cap text-white text-sm"></i>
+            </div>
+          </div>
+          <div>
+            <h1 class="text-lg font-semibold text-gray-900">Career Services Portal</h1>
+            <p class="text-xs text-gray-500">University Administration</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="hidden md:flex items-center space-x-2 text-sm text-gray-600">
+            <i class="fas fa-user-circle"></i>
+            <span>Admin Dashboard</span>
+          </div>
+          <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+            <i class="fas fa-bell"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Create New Event</h1>
+          <p class="text-gray-600 mt-2">Set up career fairs, info sessions, and networking events for students</p>
+        </div>
+        <div class="flex items-center space-x-3">
+          <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <i class="fas fa-save mr-2"></i>Save Draft
+          </button>
+          <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <i class="fas fa-eye mr-2"></i>Preview
+          </button>
+        </div>
+      </div>
+      <!-- Progress Indicator -->
+      <div class="flex items-center space-x-2 text-sm text-gray-500">
+        <i class="fas fa-clipboard-list text-primary"></i>
+        <span id="stepLabel">Step 1 of 3: Event Details</span>
+        <div class="flex-1 bg-gray-200 rounded-full h-2 ml-4">
+          <div class="bg-primary h-2 rounded-full w-1/3 transition-all duration-300" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="max-w-5xl mx-auto">
+      <form id="careerFairForm" action="/api/career-fair" method="POST" enctype="multipart/form-data" class="space-y-8">
+        <!-- Step 1: Event Details -->
+        <div id="step-1">
+          <!-- Event Basics -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                  <i class="fas fa-calendar-alt text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Event Basics</h2>
+                  <p class="text-sm text-gray-500">Essential information about your event</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Event Name <span class="text-red-500">*</span></label>
+                <input type="text" name="eventName" required placeholder="e.g., Fall 2024 Career Fair" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Choose a clear, descriptive name for your event</p>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Event Type <span class="text-red-500">*</span></label>
+                <select name="eventType" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">Select event type</option>
+                  <option value="career-fair">Career Fair</option>
+                  <option value="info-session">Information Session</option>
+                  <option value="networking">Networking Event</option>
+                  <option value="workshop">Workshop</option>
+                  <option value="panel">Panel Discussion</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Event Format <span class="text-red-500">*</span></label>
+                <select name="eventFormat" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">Select format</option>
+                  <option value="in-person">In-Person</option>
+                  <option value="virtual">Virtual</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Location/Platform <span class="text-red-500">*</span></label>
+                <input type="text" name="eventLocation" required placeholder="e.g., Student Union Ballroom" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Physical address or virtual platform details</p>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Target Audience</label>
+                <select name="targetAudience" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">All students</option>
+                  <option value="undergrad">Undergraduate Students</option>
+                  <option value="graduate">Graduate Students</option>
+                  <option value="alumni">Alumni</option>
+                  <option value="specific-majors">Specific Majors</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Dress Code</label>
+                <select name="dressAttire" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">No specific requirement</option>
+                  <option value="casual">Casual</option>
+                  <option value="business">Business Casual</option>
+                  <option value="formal">Business Formal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Registration Settings -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                  <i class="fas fa-users text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Registration & Capacity</h2>
+                  <p class="text-sm text-gray-500">Manage student registration and event capacity</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Registration Requirements -->
+              <div class="space-y-4">
+                <div class="space-y-3">
+                  <label class="block text-sm font-medium text-gray-700">Registration Requirement</label>
+                  <div class="space-y-3">
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="registrationRequired" value="required" checked class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">Required</div>
+                        <div class="text-sm text-gray-500">Students must register to attend</div>
+                      </div>
+                    </label>
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="registrationRequired" value="optional" class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">Optional</div>
+                        <div class="text-sm text-gray-500">Open event, no registration needed</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="space-y-2">
+                  <label class="block text-sm font-medium text-gray-700">Maximum Attendees</label>
+                  <input type="number" name="attendeesPermitted" placeholder="e.g., 200" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <p class="text-xs text-gray-500">Leave blank for unlimited capacity</p>
+                </div>
+              </div>
+              
+              <!-- Waitlist Management -->
+              <div class="space-y-4">
+                <div class="space-y-3">
+                  <label class="block text-sm font-medium text-gray-700">Waitlist Management</label>
+                  <div class="space-y-3">
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="enableWaitlist" value="enabled" class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">Enable Waitlist</div>
+                        <div class="text-sm text-gray-500">Allow students to join waitlist when full</div>
+                      </div>
+                    </label>
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="enableWaitlist" value="disabled" checked class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">No Waitlist</div>
+                        <div class="text-sm text-gray-500">Close registration when capacity reached</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="space-y-3">
+                  <label class="block text-sm font-medium text-gray-700">Auto-promotion</label>
+                  <div class="space-y-3">
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="autoPromote" value="automatic" class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">Automatic</div>
+                        <div class="text-sm text-gray-500">Auto-promote from waitlist</div>
+                      </div>
+                    </label>
+                    <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                      <input type="radio" name="autoPromote" value="manual" checked class="mt-1 text-primary focus:ring-primary">
+                      <div class="flex-1">
+                        <div class="font-medium text-gray-900">Manual</div>
+                        <div class="text-sm text-gray-500">Manually manage waitlist</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Employer Information -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                  <i class="fas fa-building text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Employer Information</h2>
+                  <p class="text-sm text-gray-500">Details about participating employers</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Primary Employer</label>
+                <input type="text" name="employerName" placeholder="e.g., Microsoft Corporation" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Presenter/Contact</label>
+                <input type="text" name="presenter" placeholder="e.g., John Smith, Recruiter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Industry Focus</label>
+                <select name="industry" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">Select industry</option>
+                  <option value="tech">Technology</option>
+                  <option value="finance">Finance & Banking</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="consulting">Consulting</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="nonprofit">Non-profit</option>
+                  <option value="government">Government</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Work Authorization</label>
+                <select name="workAuthorization" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">No specific requirement</option>
+                  <option value="required">US Work Authorization Required</option>
+                  <option value="sponsorship">Visa Sponsorship Available</option>
+                  <option value="mixed">Mixed Requirements</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mt-6 space-y-2">
+              <label class="block text-sm font-medium text-gray-700">Additional Employers</label>
+              <select name="employers" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="">Add participating employers</option>
+                <option value="contact1">ABC Corporation</option>
+                <option value="contact2">XYZ Industries</option>
+                <option value="contact3">Tech Innovations Inc.</option>
+              </select>
+              <p class="text-xs text-gray-500">Select multiple employers who will participate in this event</p>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-warning rounded-lg flex items-center justify-center">
+                  <i class="fas fa-address-card text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Event Contact</h2>
+                  <p class="text-sm text-gray-500">Primary contact for this event</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Contact Name</label>
+                <input type="text" name="contactName" placeholder="e.g., Sarah Johnson" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" name="contactEmail" placeholder="e.g., sarah.johnson@university.edu" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="tel" name="contactPhone" placeholder="e.g., (555) 123-4567" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+            </div>
+          </div>
+
+          <!-- Administrative Settings -->
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                  <i class="fas fa-cogs text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900">Administrative Settings</h2>
+                  <p class="text-sm text-gray-500">Configure event permissions and visibility</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Event Source</label>
+                <select name="eventSource" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="university">University Event</option>
+                  <option value="company">Company-Sponsored Event</option>
+                  <option value="partnership">Partnership Event</option>
+                </select>
+              </div>
+              
+              <div class="space-y-3">
+                <label class="block text-sm font-medium text-gray-700">Employer Access to Student List</label>
+                <div class="space-y-3">
+                  <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <input type="radio" name="registrantsVisibility" value="all" checked class="mt-1 text-primary focus:ring-primary">
+                    <div class="flex-1">
+                      <div class="font-medium text-gray-900">Anytime Access</div>
+                      <div class="text-sm text-gray-500">Employers can view registrants immediately</div>
+                    </div>
+                  </label>
+                  <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <input type="radio" name="registrantsVisibility" value="after" class="mt-1 text-primary focus:ring-primary">
+                    <div class="flex-1">
+                      <div class="font-medium text-gray-900">After Registration Closes</div>
+                      <div class="text-sm text-gray-500">Access granted when registration period ends</div>
+                    </div>
+                  </label>
+                  <label class="flex items-start space-x-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    <input type="radio" name="registrantsVisibility" value="none" class="mt-1 text-primary focus:ring-primary">
+                    <div class="flex-1">
+                      <div class="font-medium text-gray-900">No Access</div>
+                      <div class="text-sm text-gray-500">Employers cannot view student information</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Payment (if any) & Custom Kiosk Questions -->
+        <div id="step-2" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <i class="fas fa-credit-card text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">Payment (if any)</h2>
+                <p class="text-sm text-gray-500">Set up payment requirements for this event</p>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <label class="block text-sm font-medium text-gray-700">Is payment required for this event?</label>
+              <select name="paymentRequired" id="paymentRequired" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="no" selected>No</option>
+                <option value="yes">Yes</option>
+              </select>
+              <div id="paymentDetails" class="hidden space-y-3">
+                <label class="block text-sm font-medium text-gray-700">Amount (USD)</label>
+                <input type="number" min="0" step="0.01" name="paymentAmount" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g., 25.00">
+                <label class="block text-sm font-medium text-gray-700">Payment Instructions</label>
+                <textarea name="paymentInstructions" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Provide payment details or instructions"></textarea>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div class="flex items-center space-x-3 mb-2">
+                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                  <i class="fas fa-question-circle text-white"></i>
+                </div>
+                <div>
+                  <h2 class="text-lg font-semibold text-gray-900">Custom Kiosk Check-in Questions</h2>
+                  <p class="text-sm text-gray-500">Add custom questions for your event check-in kiosk to gather more detailed information from attendees.</p>
+                </div>
+              </div>
+              <div id="customQuestionsContainer" class="space-y-3">
+                <div class="flex items-center space-x-2">
+                  <input type="text" name="customQuestions[]" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g., What are you hoping to get out of this event?">
+                  <button type="button" class="remove-question text-red-500 hover:text-red-700 hidden"><i class="fas fa-trash"></i></button>
+                </div>
+              </div>
+              <button type="button" id="addQuestionBtn" class="mt-2 px-3 py-1 text-sm font-medium text-primary border border-primary rounded hover:bg-primary hover:text-white transition-colors">
+                <i class="fas fa-plus mr-1"></i>Add Another Question
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Information Session Details -->
+        <div id="step-2-information-session" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <i class="fas fa-info-circle text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">Information Session Details</h2>
+                <p class="text-sm text-gray-500">Provide details specific to your information session event.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Session Topic <span class="text-red-500">*</span></label>
+                <input type="text" name="sessionTopic" required placeholder="e.g., Graduate Programs Overview" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Speaker(s)</label>
+                <input type="text" name="sessionSpeakers" placeholder="e.g., Dr. Jane Doe, Admissions Director" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Session Description</label>
+                <textarea name="sessionDescription" rows="3" placeholder="Describe the session, topics covered, and what attendees can expect." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Materials or Handouts</label>
+                <input type="file" name="sessionMaterials" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Upload any materials or handouts for attendees (optional)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Networking Event Details -->
+        <div id="step-2-networking" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <i class="fas fa-users text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">Networking Event Details</h2>
+                <p class="text-sm text-gray-500">Provide details specific to your networking event.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Theme/Focus <span class="text-red-500">*</span></label>
+                <input type="text" name="networkingTheme" required placeholder="e.g., Tech Careers Night" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Facilitator(s)</label>
+                <input type="text" name="networkingFacilitators" placeholder="e.g., Jane Doe, Career Coach" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2 md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Event Description</label>
+                <textarea name="networkingDescription" rows="3" placeholder="Describe the event, format, and what attendees can expect." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Workshop Details -->
+        <div id="step-2-workshop" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <i class="fas fa-chalkboard-teacher text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">Workshop Details</h2>
+                <p class="text-sm text-gray-500">Provide details specific to your workshop event.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Workshop Title <span class="text-red-500">*</span></label>
+                <input type="text" name="workshopTitle" required placeholder="e.g., Resume Building Workshop" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Date & Time <span class="text-red-500">*</span></label>
+                <input type="text" name="eventDate" required placeholder="e.g., 2024-03-15 14:00" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Use 24-hour format, e.g., 14:00 for 2 PM</p>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Location <span class="text-red-500">*</span></label>
+                <input type="text" name="eventLocation" required placeholder="e.g., Room 101, Main Building" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Capacity</label>
+                <input type="number" name="attendeesPermitted" placeholder="e.g., 30" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Leave blank for no limit</p>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Materials</label>
+                <input type="file" name="workshopMaterials" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Upload any materials or handouts for attendees (optional)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Panel Discussion Details -->
+        <div id="step-2-panel" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
+                <i class="fas fa-comments text-white"></i>
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">Panel Discussion Details</h2>
+                <p class="text-sm text-gray-500">Provide details specific to your panel discussion event.</p>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Panel Title <span class="text-red-500">*</span></label>
+                <input type="text" name="panelTitle" required placeholder="e.g., Future of Work Panel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Date & Time <span class="text-red-500">*</span></label>
+                <input type="text" name="eventDate" required placeholder="e.g., 2024-04-10 18:00" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <p class="text-xs text-gray-500">Use 24-hour format, e.g., 18:00 for 6 PM</p>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Location <span class="text-red-500">*</span></label>
+                <input type="text" name="eventLocation" required placeholder="e.g., Auditorium A" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Panelists</label>
+                <input type="text" name="panelists" placeholder="e.g., John Doe, Jane Smith" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-medium text-gray-700">Discussion Topics</label>
+                <textarea name="discussionTopics" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g., Industry trends, Career advice"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Review Information (styled like the screenshot) -->
+        <div id="step-3" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-0 mb-8">
+            <!-- Banner image (placeholder) -->
+            <div class="h-40 w-full rounded-t-xl overflow-hidden bg-gray-200 flex items-center justify-center" style="background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80') center/cover;">
+              <!-- Optional: event image preview -->
+            </div>
+            <div class="p-6">
+              <!-- Event Title and Details -->
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h2 id="reviewEventName" class="text-2xl font-bold text-gray-900 mb-1"></h2>
+                  <div class="flex items-center text-gray-600 text-sm space-x-2 mb-1">
+                    <span id="reviewEventDate"></span>
+                    <span id="reviewEventLocation"></span>
+                  </div>
+                  <div class="flex items-center text-xs text-green-700 space-x-2">
+                    <i class="fas fa-link"></i>
+                    <span>Anyone with a link can view and RSVP</span>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-2 mt-4 md:mt-0">
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-calendar-plus mr-1"></i>Add to calendar</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-qrcode mr-1"></i>Print event QR code</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-edit mr-1"></i>Edit event</button>
+                  <button type="button" class="px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-copy mr-1"></i>Duplicate event</button>
+                </div>
+              </div>
+              <!-- Tabs -->
+              <div class="flex border-b border-gray-200 mb-4">
+                <button type="button" class="px-4 py-2 text-sm font-semibold text-primary border-b-2 border-primary focus:outline-none">Overview</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Employers invited</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Candidates</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Mobile app setup</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Kiosk setup</button>
+              </div>
+              <!-- Overview/Description -->
+              <div class="mb-6">
+                <p id="reviewEventDescription" class="text-gray-800"></p>
+              </div>
+              <!-- Comments/Activity (static for review) -->
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Comments and activity</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Comment on event" disabled></textarea>
+                <div class="mt-2 text-xs text-gray-500">
+                  <div><span class="font-semibold">CREATE</span> on <span id="reviewCreateDate"></span> <span id="reviewCreator"></span> created this event.</div>
+                </div>
+              </div>
+              <!-- Right side: RSVP/Public link/Schools invited (static for review) -->
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                  <!-- Main review content populated by JS -->
+                  <div id="reviewContent" class="space-y-4 text-gray-800"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Public link</div>
+                    <button type="button" class="w-full px-2 py-1 text-xs font-medium bg-primary text-white rounded hover:bg-blue-700"><i class="fas fa-link mr-1"></i>Copy link to event</button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">RSVPs</div>
+                    <div class="flex justify-between text-sm">
+                      <span>Registered</span><span>0</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Invited by schools</span><span>0</span>
+                    </div>
+                    <button type="button" class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">View RSVP list</button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Employers invited</div>
+                    <div class="flex justify-between text-sm">
+                      <span>Pending</span><span>0</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Approved</span><span>0</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                      <span>Declined</span><span>0</span>
+                    </div>
+                    <button type="button" class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">View Employers list</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Review & Submit for Information Session -->
+        <div id="step-3-information-session" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-0 mb-8">
+            <div class="h-40 w-full rounded-t-xl overflow-hidden bg-gray-200 flex items-center justify-center">
+              <!-- Optional: event image preview -->
+              <i class="fas fa-info-circle text-6xl text-gray-400"></i>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h2 id="reviewSessionTopic" class="text-2xl font-bold text-gray-900 mb-1"></h2>
+                  <div class="flex items-center text-gray-600 text-sm space-x-2 mb-1">
+                    <span id="reviewSessionSpeakers"></span>
+                  </div>
+                  <div class="flex items-center text-xs text-green-700 space-x-2">
+                    <i class="fas fa-link"></i>
+                    <span>Anyone with a link can view and RSVP</span>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-2 mt-4 md:mt-0">
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-calendar-plus mr-1"></i>Add to calendar</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-qrcode mr-1"></i>Print event QR code</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-edit mr-1"></i>Edit event</button>
+                  <button type="button" class="px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-copy mr-1"></i>Duplicate event</button>
+                </div>
+              </div>
+              <div class="flex border-b border-gray-200 mb-4">
+                <button type="button" class="px-4 py-2 text-sm font-semibold text-primary border-b-2 border-primary focus:outline-none">Overview</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Materials</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Attendees</button>
+              </div>
+              <div class="mb-6">
+                <p id="reviewSessionDescription" class="text-gray-800"></p>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Comments and activity</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Comment on event" disabled></textarea>
+                <div class="mt-2 text-xs text-gray-500">
+                  <div><span class="font-semibold">CREATE</span> on <span id="reviewCreateDate"></span> <span id="reviewCreator"></span> created this event.</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                  <div id="reviewSessionContent" class="space-y-4 text-gray-800"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Public link</div>
+                    <button type="button" class="w-full px-2 py-1 text-xs font-medium bg-primary text-white rounded hover:bg-blue-700"><i class="fas fa-link mr-1"></i>Copy link to event</button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">RSVPs</div>
+                    <div class="flex justify-between text-sm">
+                      <span>Registered</span><span>0</span>
+                    </div>
+                    <button type="button" class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">View RSVP list</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Review & Submit for Networking Event -->
+        <div id="step-3-networking" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-0 mb-8">
+            <div class="h-40 w-full rounded-t-xl overflow-hidden bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-users text-6xl text-gray-400"></i>
+            </div>
+            <div class="p-6">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h2 id="reviewNetworkingTheme" class="text-2xl font-bold text-gray-900 mb-1"></h2>
+                  <div class="flex items-center text-gray-600 text-sm space-x-2 mb-1">
+                    <span id="reviewNetworkingFacilitators"></span>
+                  </div>
+                  <div class="flex items-center text-xs text-green-700 space-x-2">
+                    <i class="fas fa-link"></i>
+                    <span>Anyone with a link can view and RSVP</span>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-2 mt-4 md:mt-0">
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-calendar-plus mr-1"></i>Add to calendar</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-qrcode mr-1"></i>Print event QR code</button>
+                  <button type="button" class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-edit mr-1"></i>Edit event</button>
+                  <button type="button" class="px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200"><i class="fas fa-copy mr-1"></i>Duplicate event</button>
+                </div>
+              </div>
+              <div class="flex border-b border-gray-200 mb-4">
+                <button type="button" class="px-4 py-2 text-sm font-semibold text-primary border-b-2 border-primary focus:outline-none">Overview</button>
+                <button type="button" class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Attendees</button>
+              </div>
+              <div class="mb-6">
+                <p id="reviewNetworkingDescription" class="text-gray-800"></p>
+              </div>
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Comments and activity</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Comment on event" disabled></textarea>
+                <div class="mt-2 text-xs text-gray-500">
+                  <div><span class="font-semibold">CREATE</span> on <span id="reviewCreateDate"></span> <span id="reviewCreator"></span> created this event.</div>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                  <div id="reviewNetworkingContent" class="space-y-4 text-gray-800"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Public link</div>
+                    <button type="button" class="w-full px-2 py-1 text-xs font-medium bg-primary text-white rounded hover:bg-blue-700"><i class="fas fa-link mr-1"></i>Copy link to event</button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">RSVPs</div>
+                    <div class="flex justify-between text-sm">
+                      <span>Registered</span><span>0</span>
+                    </div>
+                    <button type="button" class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">View RSVP list</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Review & Submit for Workshop -->
+        <div id="step-3-workshop" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-0 mb-8">
+            <!-- Banner -->
+            <div class="h-40 w-full rounded-t-xl overflow-hidden bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-chalkboard-teacher text-6xl text-gray-400"></i>
+            </div>
+            <div class="p-6">
+              <!-- Header -->
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h2 id="reviewWorkshopTitle" class="text-2xl font-bold text-gray-900 mb-1"></h2>
+                  <div class="flex items-center text-gray-600 text-sm space-x-2 mb-1">
+                    <span id="reviewWorkshopDate"></span>
+                    <span id="reviewWorkshopLocation"></span>
+                  </div>
+                  <div class="flex items-center text-xs text-green-700 space-x-2">
+                    <i class="fas fa-link"></i>
+                    <span>Anyone with a link can view and RSVP</span>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-2 mt-4 md:mt-0">
+                  <button class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">
+                    <i class="fas fa-calendar-plus mr-1"></i>Add to calendar
+                  </button>
+                  <button class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">
+                    <i class="fas fa-qrcode mr-1"></i>Print QR code
+                  </button>
+                  <button class="px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">
+                    <i class="fas fa-edit mr-1"></i>Edit event
+                  </button>
+                </div>
+              </div>
+              <!-- Tabs -->
+              <div class="flex border-b border-gray-200 mb-4">
+                <button class="px-4 py-2 text-sm font-semibold text-primary border-b-2 border-primary">Overview</button>
+                <button class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Agenda</button>
+                <button class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Materials</button>
+                <button class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Attendees</button>
+              </div>
+              <!-- Description -->
+              <div class="mb-6">
+                <p id="reviewWorkshopDescription" class="text-gray-800"></p>
+              </div>
+              <!-- Comments -->
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Comments & activity</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" disabled></textarea>
+                <div class="mt-2 text-xs text-gray-500">
+                  <div><strong>CREATE</strong> on <span id="reviewWorkshopCreateDate"></span> by <span id="reviewCreator"></span>.</div>
+                </div>
+              </div>
+              <!-- Main content & stats -->
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                  <div id="reviewWorkshopContent" class="space-y-4 text-gray-800"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Public link</div>
+                    <button class="w-full px-2 py-1 text-xs font-medium bg-primary text-white rounded hover:bg-blue-700">
+                      <i class="fas fa-link mr-1"></i>Copy link
+                    </button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">RSVPs</div>
+                    <div class="flex justify-between text-sm"><span>Registered</span><span>0</span></div>
+                    <button class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">
+                      View list
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Review & Submit for Panel Discussion -->
+        <div id="step-3-panel" class="hidden">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-0 mb-8">
+            <!-- Banner -->
+            <div class="h-40 w-full rounded-t-xl overflow-hidden bg-gray-200 flex items-center justify-center">
+              <i class="fas fa-comments text-6xl text-gray-400"></i>
+            </div>
+            <div class="p-6">
+              <!-- Header -->
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h2 id="reviewPanelTitle" class="text-2xl font-bold text-gray-900 mb-1"></h2>
+                  <div class="flex items-center text-gray-600 text-sm space-x-2 mb-1">
+                    <span id="reviewPanelDate"></span>
+                    <span id="reviewPanelLocation"></span>
+                  </div>
+                  <div class="flex items-center text-xs text-green-700 space-x-2">
+                    <i class="fas fa-link"></i>
+                    <span>Anyone with a link can view and RSVP</span>
+                  </div>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-2 mt-4 md:mt-0">
+                  <button class="mb-2 md:mb-0 px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">
+                    <i class="fas fa-calendar-plus mr-1"></i>Add to calendar
+                  </button>
+                  <button class="px-3 py-1 text-xs font-medium bg-gray-100 border border-gray-300 rounded hover:bg-gray-200">
+                    <i class="fas fa-edit mr-1"></i>Edit event
+                  </button>
+                </div>
+              </div>
+              <!-- Tabs -->
+              <div class="flex border-b border-gray-200 mb-4">
+                <button class="px-4 py-2 text-sm font-semibold text-primary border-b-2 border-primary">Overview</button>
+                <button class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Panelists</button>
+                <button class="px-4 py-2 text-sm text-gray-600 hover:text-primary">Format</button>
+              </div>
+              <!-- Description -->
+              <div class="mb-6">
+                <p id="reviewPanelDescription" class="text-gray-800"></p>
+              </div>
+              <!-- Comments -->
+              <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Comments & activity</label>
+                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" disabled></textarea>
+                <div class="mt-2 text-xs text-gray-500">
+                  <div><strong>CREATE</strong> on <span id="reviewPanelCreateDate"></span> by <span id="reviewCreator"></span>.</div>
+                </div>
+              </div>
+              <!-- Main content & stats -->
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                  <div id="reviewPanelContent" class="space-y-4 text-gray-800"></div>
+                </div>
+                <div class="space-y-4">
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">Public link</div>
+                    <button class="w-full px-2 py-1 text-xs font-medium bg-primary text-white rounded hover:bg-blue-700">
+                      <i class="fas fa-link mr-1"></i>Copy link
+                    </button>
+                  </div>
+                  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <div class="font-semibold text-gray-900 mb-2">RSVPs</div>
+                    <div class="flex justify-between text-sm"><span>Registered</span><span>0</span></div>
+                    <button class="mt-2 w-full px-2 py-1 text-xs font-medium bg-gray-200 rounded hover:bg-gray-300">
+                      View list
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-Step Navigation Buttons -->
+        <div class="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-xl shadow-lg">
+          <div>
+            <button type="button" id="prevBtn" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors hidden">
+              <i class="fas fa-arrow-left mr-2"></i>Back
+            </button>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button type="button" id="nextBtn" class="px-6 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-blue-700 transition-colors">
+              Next <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button type="submit" id="submitBtn" class="px-6 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors hidden">
+              <i class="fas fa-check mr-2"></i>Submit Event
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div id="successMessage" class="fixed top-4 right-4 bg-green-50 border border-green-200 rounded-lg p-4 shadow-lg hidden animate-fade-in">
+    <div class="flex items-center">
+      <i class="fas fa-check-circle text-green-600 mr-3"></i>
+      <div>
+        <h4 class="text-green-800 font-medium">Event Created Successfully!</h4>
+        <p class="text-green-600 text-sm">Your event has been saved and will be published shortly.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Multi-step form logic with unique review for each event type.
+    const eventTypeMap = {
+      'career-fair':    { step2: 'step-2', step3: 'step-3' },
+      'info-session':   { step2: 'step-2-information-session', step3: 'step-3-information-session' },
+      'networking':     { step2: 'step-2-networking', step3: 'step-3-networking' },
+      'workshop':       { step2: 'step-2-workshop', step3: 'step-3-workshop' },
+      'panel':          { step2: 'step-2-panel', step3: 'step-3-panel' }
+    };
+
+    const allStep2Ids = [
+      'step-2', 'step-2-information-session', 'step-2-networking', 'step-2-workshop', 'step-2-panel'
+    ];
+    const allStep3Ids = [
+      'step-3', 'step-3-information-session', 'step-3-networking', 'step-3-workshop', 'step-3-panel'
+    ];
+
+    let currentStep = 0; // 0: step1, 1: step2, 2: step3
+
+    const eventTypeSelect = document.querySelector('select[name="eventType"]');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const step1 = document.getElementById('step-1');
+    const progressBar = document.getElementById('progressBar');
+    const stepLabel = document.getElementById('stepLabel');
+
+    function getSelectedEventType() {
+      return eventTypeSelect.value;
+    }
+    function getStepIdsForType(type) {
+      return eventTypeMap[type] || eventTypeMap['career-fair'];
+    }
+    function showStep(idx) {
+      // Hide all step 2/3
+      allStep2Ids.concat(allStep3Ids).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      // Always show step 1
+      step1.classList.toggle('hidden', idx !== 0);
+
+      // Show correct step 2/3 for selected event type
+      const type = getSelectedEventType();
+      const { step2, step3 } = getStepIdsForType(type);
+
+      if (idx === 1) {
+        const el = document.getElementById(step2);
+        if (el) el.classList.remove('hidden');
+      }
+      if (idx === 2) {
+        const el = document.getElementById(step3);
+        if (el) el.classList.remove('hidden');
+        populateReview(type);
+      }
+
+      // Button visibility
+      prevBtn.classList.toggle('hidden', idx === 0);
+      nextBtn.classList.toggle('hidden', idx === 2);
+      submitBtn.classList.toggle('hidden', idx !== 2);
+
+      // Progress bar and label
+      updateProgressBar(idx, type);
+    }
+    function updateProgressBar(idx, type) {
+      if (progressBar) {
+        const widths = ['w-1/3', 'w-2/3', 'w-full'];
+        progressBar.classList.remove('w-1/3', 'w-2/3', 'w-full');
+        progressBar.classList.add(widths[idx]);
+      }
+      if (stepLabel) {
+        const typeLabel = eventTypeSelect.options[eventTypeSelect.selectedIndex]?.text || '';
+        const labels = [
+          `Step 1 of 3: Event Details`,
+          `Step 2 of 3: ${typeLabel} Details`,
+          `Step 3 of 3: Review & Submit`
+        ];
+        stepLabel.textContent = labels[idx];
+      }
+    }
+
+    // Navigation
+    nextBtn.addEventListener('click', function () {
+      if (currentStep < 2) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+    prevBtn.addEventListener('click', function () {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+    eventTypeSelect.addEventListener('change', function () {
+      currentStep = 0;
+      showStep(currentStep);
+    });
+
+    // Initial show
+    showStep(currentStep);
+
+    // --- Review population logic ---
+    function populateReview(type) {
+      const form = document.getElementById('careerFairForm');
+      // Always set creator/date
+      const now = new Date().toLocaleString();
+      document.querySelectorAll('#reviewCreateDate, #reviewWorkshopCreateDate, #reviewPanelCreateDate').forEach(el => el && (el.textContent = now));
+      document.querySelectorAll('#reviewCreator').forEach(el => el && (el.textContent = 'Career Services Admin'));
+
+      // Helper for safe value
+      const val = name => (form.elements[name] ? form.elements[name].value : '');
+
+      // Career Fair (default)
+      if (type === 'career-fair') {
+        document.getElementById('reviewEventName').textContent = val('eventName') || 'Event Name';
+        document.getElementById('reviewEventLocation').textContent = val('eventLocation') ? '• ' + val('eventLocation') : '';
+        document.getElementById('reviewEventDescription').textContent =
+          (form.eventType.options[form.eventType.selectedIndex]?.text || '') +
+          ' • ' +
+          (form.eventFormat.options[form.eventFormat.selectedIndex]?.text || '');
+        // ... (existing reviewContent logic)
+        return;
+      }
+
+      // Information Session
+      if (type === 'info-session') {
+        document.getElementById('reviewSessionTopic').textContent = val('sessionTopic') || 'Session Topic';
+        document.getElementById('reviewSessionSpeakers').textContent = val('sessionSpeakers') || '';
+        document.getElementById('reviewEventLocationInfoSession').textContent = val('eventLocation') || '';
+        document.getElementById('reviewSessionDescription').textContent = val('sessionDescription') || '';
+        document.getElementById('reviewSessionMaterials').textContent =
+          form.sessionMaterials && form.sessionMaterials.value ? form.sessionMaterials.value : 'No materials uploaded';
+        return;
+      }
+
+      // Networking Event
+      if (type === 'networking') {
+        document.getElementById('reviewNetworkingTheme').textContent = val('networkingTheme') || 'Networking Theme';
+        document.getElementById('reviewNetworkingFacilitators').textContent = val('networkingFacilitators') || '';
+        document.getElementById('reviewEventLocationNetworking').textContent = val('eventLocation') || '';
+        document.getElementById('reviewNetworkingDescription').textContent = val('networkingDescription') || '';
+        return;
+      }
+
+      // Workshop
+      if (type === 'workshop') {
+        document.getElementById('reviewWorkshopTitle').textContent = val('workshopTitle') || 'Workshop Title';
+        document.getElementById('reviewWorkshopDate').textContent = val('eventDate') || '';
+        document.getElementById('reviewWorkshopLocation').textContent = val('eventLocation') || '';
+        document.getElementById('reviewWorkshopDescription').textContent = val('workshopDescription') || '';
+        document.getElementById('reviewWorkshopContent').innerHTML =
+          form.workshopMaterials && form.workshopMaterials.value
+            ? `<div class="font-semibold">Materials:</div><div>${form.workshopMaterials.value}</div>`
+            : `<div class="font-semibold">Materials:</div><div>No materials uploaded</div>`;
+        return;
+      }
+
+      // Panel Discussion
+      if (type === 'panel') {
+        document.getElementById('reviewPanelTitle').textContent = val('panelTitle') || 'Panel Title';
+        document.getElementById('reviewPanelDate').textContent = val('eventDate') || '';
+        document.getElementById('reviewPanelLocation').textContent = val('eventLocation') || '';
+        document.getElementById('reviewPanelDescription').textContent = val('panelDescription') || '';
+        return;
+      }
+    }
+
+    // Form submission
+    document.getElementById('careerFairForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const successMessage = document.getElementById('successMessage');
+      successMessage.classList.remove('hidden');
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 5000);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Dynamic form interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-fill contact information from user profile
+      const contactName = document.querySelector('input[name="contactName"]');
+      const contactEmail = document.querySelector('input[name="contactEmail"]');
+      if (contactName && contactEmail) {
+        contactName.value = 'Career Services Admin';
+        contactEmail.value = 'careers@university.edu';
+      }
+      // Add hover effects to form sections
+      const sections = document.querySelectorAll('.bg-white.rounded-xl');
+      sections.forEach(section => {
+        section.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+          this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+        });
+        section.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+          this.style.boxShadow = '';
+        });
+      });
+    });
+
+    // Toggle virtual link field based on event format selection
+    function toggleVirtualField(selectedFormat) {
+      const virtualField = document.getElementById('virtualLinkField');
+      const virtualInput = document.querySelector('input[name="virtualLink"]');
+      if (virtualField && virtualInput) {
+        if (selectedFormat === 'virtual' || selectedFormat === 'hybrid') {
+          virtualField.classList.remove('hidden');
+          virtualInput.required = true;
+        } else {
+          virtualField.classList.add('hidden');
+          virtualInput.required = false;
+          virtualInput.value = '';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Elements
+      const eventTypeSelect = document.querySelector('select[name="eventType"]');
+      const step1 = document.getElementById('step-1');
+      const step2 = document.getElementById('step-2');
+      const step3 = document.getElementById('step-3');
+      const step2Info = document.getElementById('step-2-information-session');
+      const step3Info = document.getElementById('step-3-information-session');
+
+      // Helper to show/hide steps based on event type
+      function updateStepsForEventType() {
+        const eventType = eventTypeSelect.value;
+
+        if (eventType === 'info-session') {
+          // Hide default steps, show info session steps
+          step1.classList.remove('hidden');
+          if (step2) step2.classList.add('hidden');
+          if (step3) step3.classList.add('hidden');
+          if (step2Info) step2Info.classList.remove('hidden');
+          if (step3Info) step3Info.classList.remove('hidden');
+        } else {
+          // Show default steps, hide info session steps
+          step1.classList.remove('hidden');
+          if (step2) step2.classList.remove('hidden');
+          if (step3) step3.classList.remove('hidden');
+          if (step2Info) step2Info.classList.add('hidden');
+          if (step3Info) step3Info.classList.add('hidden');
+        }
+      }
+
+      // Initial check
+      updateStepsForEventType();
+
+      // Listen for changes
+      eventTypeSelect.addEventListener('change', updateStepsForEventType);
+    });
+  </script>
+</body>
+</html>
